@@ -7,6 +7,8 @@
 This is a straight-forward Rails app, clone it from git then you are ready to do the setup:
 
 ```sh
+cp .env.sample .env
+bundle install
 bundle exec rails db:create db:migrate
 ```
 
@@ -22,6 +24,6 @@ bundle exec rails server
 
 To run the test suite
 
-```s
+```sh
 bundle exec rspec
 ```

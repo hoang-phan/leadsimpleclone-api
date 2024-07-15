@@ -6,15 +6,15 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
+  SKIP_AUTHENTICATIONS = %w(login).freeze
+
+  before_action :authenticate_user
+
   def execute
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
-    }
-    result = LeadsimplecloneApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = LeadsimplecloneApiSchema.execute(query, variables:, context:, operation_name:)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
@@ -22,6 +22,28 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def authenticate_user
+    if !current_user && SKIP_AUTHENTICATIONS.exclude?(query_name)
+      render json: {}, status: :unauthorized
+    end
+  end
+
+  def query_name
+    parsed_query.selected_operation.selections[0].name
+  end
+
+  def parsed_query
+    GraphQL::Query.new(LeadsimplecloneApiSchema, params[:query])
+  end
+
+  def context
+    { current_user: }
+  end
+
+  def current_user
+    @current_user ||= JsonWebToken.to_user(request.headers["Authorization"].to_s.split(" ")[1])
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

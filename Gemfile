@@ -10,6 +10,10 @@ gem "graphql"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 gem "sprockets-rails", require: "sprockets/railtie"
+gem "rack-cors"
+gem "devise"
+gem "jwt"
+gem "dotenv-rails"
 
 group :development, :test do
   gem "debug", platforms: %i(mri windows)

@@ -3,6 +3,8 @@ require "rails_helper"
 module Queries
   RSpec.describe "Contacts", type: :request do
     describe ".resolve" do
+      include_context "api user authenticated"
+
       let!(:contact_1) { create(:contact) }
       let!(:contact_2) { create(:contact) }
 
@@ -23,7 +25,7 @@ module Queries
       end
 
       it "returns paginated contacts" do
-        graphql query: <<~GRAPHQL
+        graphql authorization:, query: <<~GRAPHQL
           {
             contacts(first: 1) {
               edges {

@@ -3,6 +3,8 @@ require "rails_helper"
 module Queries
   RSpec.describe "Contact", type: :request do
     describe ".resolve" do
+      include_context "api user authenticated"
+
       let!(:contact) { create(:contact) }
       let!(:email) { create(:email, contact: contact) }
       let!(:phone) { create(:phone, contact: contact) }
@@ -30,7 +32,7 @@ module Queries
       end
 
       it "returns contact for provided id" do
-        graphql query: <<~GRAPHQL
+        graphql authorization:, query: <<~GRAPHQL
           query {
             contact(id: #{contact.id}) {
               id

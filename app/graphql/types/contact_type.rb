@@ -9,6 +9,10 @@ module Types
     field :emails, [EmailType]
     field :phones, [PhoneType]
     field :source, SourceType
-    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :created_at, String, null: false
+
+    def created_at
+      object.created_at.strftime("%m/%d/%y")
+    end
   end
 end

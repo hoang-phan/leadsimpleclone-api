@@ -3,6 +3,8 @@ require "rails_helper"
 module Queries
   RSpec.describe "Sources", type: :request do
     describe ".resolve" do
+      include_context "api user authenticated"
+
       let!(:source_1) { create(:source) }
       let!(:source_2) { create(:source) }
 
@@ -17,7 +19,7 @@ module Queries
       end
 
       it "returns paginated sources" do
-        graphql query: <<~GRAPHQL
+        graphql authorization:, query: <<~GRAPHQL
           {
             sources(first: 1) {
               edges {

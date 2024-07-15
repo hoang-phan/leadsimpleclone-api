@@ -3,6 +3,8 @@ require "rails_helper"
 module Mutations
   RSpec.describe "Create Or Update Contact", type: :request do
     describe ".resolve" do
+      include_context "api user authenticated"
+
       let(:query) do
         <<~GRAPHQL
           mutation createOrUpdateContact(
@@ -101,7 +103,7 @@ module Mutations
 
         it "updates contact" do
           expect do
-            graphql query:, variables:
+            graphql query:, variables:, authorization:
           end.not_to change(Contact, :count)
           expect(json_response).to eq expected_response
         end
@@ -110,7 +112,7 @@ module Mutations
       context "when id is absent" do
         it "creates new contact" do
           expect do
-            graphql query:, variables:
+            graphql query:, variables:, authorization:
           end.to change(Contact, :count).by(1)
           expect(json_response).to eq expected_response
         end

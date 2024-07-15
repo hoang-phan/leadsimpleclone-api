@@ -3,6 +3,8 @@ require "rails_helper"
 module Queries
   RSpec.describe "Source", type: :request do
     describe ".resolve" do
+      include_context "api user authenticated"
+
       let!(:source) { create(:source) }
 
       let(:json_response) { JSON(response.body).dig("data", "source") }
@@ -14,7 +16,7 @@ module Queries
       end
 
       it "returns source for provided id" do
-        graphql query: <<~GRAPHQL
+        graphql authorization:, query: <<~GRAPHQL
           query {
             source(id: #{source.id}) {
               id
