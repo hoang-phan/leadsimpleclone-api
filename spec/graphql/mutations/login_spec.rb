@@ -17,6 +17,7 @@ module Mutations
               password: $password,
             }) {
               token
+              email
               error
             }
           }
@@ -37,6 +38,7 @@ module Mutations
 
         it "returns unauthenticated error" do
           expect(json_response["token"]).to be_blank
+          expect(json_response["email"]).to be_blank
           expect(json_response["error"]).to eq "Invalid email or password"
         end
       end
@@ -46,6 +48,7 @@ module Mutations
 
         it "returns unauthenticated error" do
           expect(json_response["token"]).to be_blank
+          expect(json_response["email"]).to be_blank
           expect(json_response["error"]).to eq "Invalid email or password"
         end
       end
@@ -53,6 +56,7 @@ module Mutations
       context "when email and password are valid" do
         it "returns the token" do
           expect(json_response["token"]).to eq JWT.encode(user.id.to_s, ENV["SECRET_TOKEN"])
+          expect(json_response["email"]).to eq user.email
           expect(json_response["error"]).to be_blank
         end
       end
