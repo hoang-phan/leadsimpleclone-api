@@ -4,7 +4,10 @@
 if User.count < 5
   FactoryBot.build(:user, email: ENV["ADMIN_EMAIL"], password: ENV["ADMIN_PASSWORD"]).save
   FactoryBot.build_list(:user, 5).map(&:save)
+else
+  User.find_by(email: ENV["ADMIN_EMAIL"]).update(password: ENV["ADMIN_PASSWORD"], password_confirmation: ENV["ADMIN_PASSWORD"])
 end
+Rails.logger.info { "Load users, ADMIN_EMAIL = #{ENV["ADMIN_EMAIL"]}, ADMIN_PASSWORD = #{ENV["ADMIN_PASSWORD"]}" }
 
 if Source.count < 3
   FactoryBot.build(:source, name: "LeadSimple").save
