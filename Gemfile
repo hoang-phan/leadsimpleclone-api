@@ -14,16 +14,15 @@ gem "rack-cors"
 gem "devise"
 gem "jwt"
 gem "dotenv-rails"
+gem "graphiql-rails"
+
+# Use for seed
+gem "factory_bot_rails"
 
 group :development, :test do
   gem "debug", platforms: %i(mri windows)
   gem "rspec-rails"
-  gem "factory_bot_rails"
   gem "faker"
-end
-
-group :development do
-  gem "graphiql-rails"
 end
 
 group :test do
