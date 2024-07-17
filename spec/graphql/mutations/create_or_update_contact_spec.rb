@@ -12,17 +12,17 @@ module Mutations
             $firstName: String!,
             $lastName: String!,
             $companyName: String,
-            $emailsAttributes: [EmailInput!],
-            $phonesAttributes: [PhoneInput!],
-            $sourceId: ID!
+            $emails: [EmailInput!],
+            $phones: [PhoneInput!],
+            $sourceId: ID
           ) {
             createOrUpdateContact(input: {
               id: $id,
               firstName: $firstName,
               lastName: $lastName,
               companyName: $companyName,
-              emailsAttributes: $emailsAttributes,
-              phonesAttributes: $phonesAttributes,
+              emails: $emails,
+              phones: $phones,
               sourceId: $sourceId
             }) {
               id
@@ -51,8 +51,8 @@ module Mutations
           firstName: first_name,
           lastName: last_name,
           companyName: company_name,
-          emailsAttributes: emails_attributes,
-          phonesAttributes: phones_attributes,
+          emails: emails_attributes,
+          phones: phones_attributes,
           sourceId: source.id.to_s
         }
       end

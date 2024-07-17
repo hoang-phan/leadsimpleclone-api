@@ -49,6 +49,13 @@ module LeadsimplecloneApi
           headers: :any,
           methods: %i(post options)
       end
+
+      allow do
+        origins '*'
+        resource '/up',
+          headers: :any,
+          methods: %i(get)
+      end
     end
   end
 end

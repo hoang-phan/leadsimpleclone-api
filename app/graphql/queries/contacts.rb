@@ -5,7 +5,7 @@ module Queries
     type Types::ContactType.connection_type, null: false
 
     def resolve
-      ::Contact.all
+      ::Contact.order(:id)
     end
   end
 end

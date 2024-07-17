@@ -10,7 +10,7 @@ end
 Rails.logger.info { "Load users, ADMIN_EMAIL = #{ENV["ADMIN_EMAIL"]}, ADMIN_PASSWORD = #{ENV["ADMIN_PASSWORD"]}" }
 
 if Source.count < 3
-  FactoryBot.build(:source, name: "LeadSimple").save
+  FactoryBot.build(:source, name: Source::LEAD_SIMPLE_SOURCE).save
   FactoryBot.build_list(:source, 3).map(&:save)
 end
 
