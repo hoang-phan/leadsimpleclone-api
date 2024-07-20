@@ -1,4 +1,5 @@
 class Lead < ApplicationRecord
+  belongs_to :assignee, optional: true, class_name: "User"
   has_one :lead_stage, dependent: :destroy
   has_one :stage, through: :lead_stage
   has_many :lead_contacts, dependent: :destroy

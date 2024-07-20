@@ -5,9 +5,10 @@ module Queries
     describe ".resolve" do
       include_context "api user authenticated"
 
+      let!(:user) { create(:user) }
       let!(:contact_1) { create(:contact) }
       let!(:stage_1) { create(:stage) }
-      let!(:lead_1) { create(:lead, contacts: [contact_1]) }
+      let!(:lead_1) { create(:lead, contacts: [contact_1], assignee: user) }
       let!(:lead_2) { create(:lead) }
 
       let(:json_response) { JSON(response.body).dig("data", "leads") }
@@ -26,6 +27,10 @@ module Queries
             "stage" => {
               "id" => stage_1.id.to_s,
               "name" => stage_1.name
+            },
+            "assignee" => {
+              "id" => user.id.to_s,
+              "email" => user.email,
             }
           }
         }]
@@ -53,6 +58,10 @@ module Queries
                   stage {
                     id
                     name
+                  }
+                  assignee {
+                    id
+                    email
                   }
                 }
               }

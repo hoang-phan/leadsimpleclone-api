@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_20_031520) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_060511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_031520) do
     t.integer "calls_made"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "assignee_id"
+    t.index ["assignee_id"], name: "index_leads_on_assignee_id"
   end
 
   create_table "phones", force: :cascade do |t|
@@ -102,5 +104,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_031520) do
   add_foreign_key "lead_contacts", "leads"
   add_foreign_key "lead_stages", "leads"
   add_foreign_key "lead_stages", "stages"
+  add_foreign_key "leads", "users", column: "assignee_id"
   add_foreign_key "phones", "contacts"
 end
