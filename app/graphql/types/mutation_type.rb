@@ -3,7 +3,7 @@
 module Types
   class MutationType < Types::BaseObject
     field :login, mutation: Mutations::Login
-    field :create_or_update_contact, mutation: Mutations::CreateOrUpdateContact
+    field :save_contact, mutation: Mutations::SaveContact
     field :delete_contacts, mutation: Mutations::DeleteContacts
   end
 end

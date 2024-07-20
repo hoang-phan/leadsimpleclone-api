@@ -5,6 +5,7 @@ class Contact < ApplicationRecord
   belongs_to :source
   has_many :emails, dependent: :destroy
   has_many :phones, dependent: :destroy
+  has_many :lead_contacts, dependent: :destroy
 
   validates :first_name, :last_name, presence: true
 

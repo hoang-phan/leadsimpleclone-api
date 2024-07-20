@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_15_123251) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_031520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,6 +37,31 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_123251) do
     t.index ["contact_id"], name: "index_emails_on_contact_id"
   end
 
+  create_table "lead_contacts", force: :cascade do |t|
+    t.bigint "lead_id", null: false
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_lead_contacts_on_contact_id"
+    t.index ["lead_id"], name: "index_lead_contacts_on_lead_id"
+  end
+
+  create_table "lead_stages", force: :cascade do |t|
+    t.bigint "lead_id", null: false
+    t.bigint "stage_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_lead_stages_on_lead_id"
+    t.index ["stage_id"], name: "index_lead_stages_on_stage_id"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.integer "emails_sent"
+    t.integer "calls_made"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "phones", force: :cascade do |t|
     t.string "value", null: false
     t.enum "kind", default: "personal", null: false, enum_type: "contact_kind"
@@ -53,6 +78,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_123251) do
     t.index ["name"], name: "index_sources_on_name", unique: true
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.integer "kind", default: 0, null: false
+    t.integer "order", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order"], name: "index_stages_on_order"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -63,5 +98,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_123251) do
 
   add_foreign_key "contacts", "sources"
   add_foreign_key "emails", "contacts"
+  add_foreign_key "lead_contacts", "contacts"
+  add_foreign_key "lead_contacts", "leads"
+  add_foreign_key "lead_stages", "leads"
+  add_foreign_key "lead_stages", "stages"
   add_foreign_key "phones", "contacts"
 end

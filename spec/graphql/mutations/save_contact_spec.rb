@@ -7,7 +7,7 @@ module Mutations
 
       let(:query) do
         <<~GRAPHQL
-          mutation createOrUpdateContact(
+          mutation saveContact(
             $id: ID,
             $firstName: String!,
             $lastName: String!,
@@ -16,7 +16,7 @@ module Mutations
             $phones: [PhoneInput!],
             $sourceId: ID
           ) {
-            createOrUpdateContact(input: {
+            saveContact(input: {
               id: $id,
               firstName: $firstName,
               lastName: $lastName,
@@ -64,7 +64,7 @@ module Mutations
       let(:phone) { Faker::PhoneNumber.phone_number }
       let(:emails_attributes) { [{ value: email, kind: "personal" }] }
       let(:phones_attributes) { [{ value: phone, kind: "work" }] }
-      let(:json_response) { JSON(response.body).dig("data", "createOrUpdateContact") }
+      let(:json_response) { JSON(response.body).dig("data", "saveContact") }
       let(:expected_response) do
         {
           "id" => expected_id,

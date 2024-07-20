@@ -6,5 +6,7 @@ module Types
     field :source, resolver: Queries::Source
     field :contacts, resolver: Queries::Contacts
     field :contact, resolver: Queries::Contact
+    field :leads, resolver: Queries::Leads
+    field :lead, resolver: Queries::Lead
   end
 end

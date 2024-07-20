@@ -1,0 +1,60 @@
+require "rails_helper"
+
+module Queries
+  RSpec.describe "Lead", type: :request do
+    describe ".resolve" do
+      include_context "api user authenticated"
+
+      let!(:contact) { create(:contact) }
+      let!(:stage) { create(:stage) }
+      let!(:lead) { create(:lead, contacts: [contact]) }
+
+      let(:json_response) { JSON(response.body).dig("data", "lead") }
+      let(:expected_response) do
+        {
+          "id" => lead.id.to_s,
+          "emailsSent" => lead.emails_sent,
+          "callsMade" => lead.calls_made,
+          "contacts" => [{
+            "id" => contact.id.to_s,
+            "firstName" => contact.first_name,
+            "lastName" => contact.last_name,
+            "companyName" => contact.company_name,  
+          }],
+          "stage" => {
+            "id" => stage.id.to_s,
+            "name" => stage.name
+          }
+        }
+      end
+
+      before do
+        lead.lead_stage.update(stage: stage)
+      end
+
+      it "returns lead for the id" do
+        graphql authorization:, query: <<~GRAPHQL
+          query {
+            lead(id: #{lead.id}) {
+              id
+              emailsSent
+              callsMade
+              contacts {
+                id
+                firstName
+                lastName
+                companyName
+              }
+              stage {
+                id
+                name
+              }
+            }
+          }
+        GRAPHQL
+
+        expect(json_response).to eq expected_response
+      end
+    end
+  end
+end

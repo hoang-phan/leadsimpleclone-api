@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class CreateOrUpdateContact < BaseMutation
+  class SaveContact < BaseMutation
     argument :id, ID, required: false
     argument :first_name, String, required: true
     argument :last_name, String, required: true
