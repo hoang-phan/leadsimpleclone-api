@@ -3,6 +3,7 @@
 module Types
   class LeadType < Types::BaseObject
     field :id, ID, null: false
+    field :name, String, null: false
     field :emails_sent, Integer, null: false
     field :calls_made, Integer, null: false
     field :stage, StageType, null: false

@@ -14,6 +14,7 @@ module Queries
       let(:expected_response) do
         {
           "id" => lead.id.to_s,
+          "name" => lead.name,
           "emailsSent" => lead.emails_sent,
           "callsMade" => lead.calls_made,
           "contacts" => [{
@@ -42,6 +43,7 @@ module Queries
           query {
             lead(id: #{lead.id}) {
               id
+              name
               emailsSent
               callsMade
               contacts {

@@ -16,6 +16,7 @@ module Queries
         [{
           "node" => {
             "id" => lead_1.id.to_s,
+            "name" => lead_1.name,
             "emailsSent" => lead_1.emails_sent,
             "callsMade" => lead_1.calls_made,
             "contacts" => [{
@@ -47,6 +48,7 @@ module Queries
               edges {
                 node {
                   id
+                  name
                   emailsSent
                   callsMade
                   contacts {
