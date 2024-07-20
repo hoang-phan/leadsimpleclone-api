@@ -8,5 +8,7 @@ module Types
     field :contact, resolver: Queries::Contact
     field :leads, resolver: Queries::Leads
     field :lead, resolver: Queries::Lead
+    field :users, resolver: Queries::Users
+    field :stages, resolver: Queries::Stages
   end
 end
