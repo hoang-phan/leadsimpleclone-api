@@ -14,6 +14,10 @@ class Contact < ApplicationRecord
 
   before_validation :guarantee_source
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def guarantee_source

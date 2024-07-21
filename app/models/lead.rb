@@ -10,6 +10,7 @@ class Lead < ApplicationRecord
   validates :name, presence: true
 
   before_validation :ensure_lead_stage
+  before_validation :ensure_name
 
   def stage_id=(value)
     ensure_lead_stage
@@ -20,5 +21,12 @@ class Lead < ApplicationRecord
 
   def ensure_lead_stage
     build_lead_stage(stage: Stage.lead.first) if lead_stage.blank?
+  end
+
+  def ensure_name
+    return if name.present?
+
+    contact = contacts&.first || Contact.where(id: contact_ids).first
+    self.name = contact&.name
   end
 end

@@ -35,14 +35,17 @@ module Mutations
       let!(:assignee) { create(:user) }
 
       let(:json_response) { JSON(response.body).dig("data", "createLeadsFromContacts") }
+      let(:new_leads) { Lead.last(2) }
 
       it "creates new leads from selected contacts" do
         expect do
           graphql query:, variables:, authorization:
         end.to change(Lead, :count).by(2)
         expect(json_response["success"]).to be true
-        expect(Lead).to exist contact: contact_1, stage:, assignee:
-        expect(Lead).to exist contact: contact_2, stage:, assignee:
+        expect(new_leads.map(&:name)).to match_array [contact_1.name, contact_2.name]
+        expect(new_leads.map(&:contacts)).to match_array [[contact_1], [contact_2]]
+        expect(new_leads.map(&:assignee)).to eq [assignee, assignee]
+        expect(new_leads.map(&:stage)).to eq [stage, stage]
       end
     end
   end
