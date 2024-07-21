@@ -16,7 +16,7 @@ class Contact < ApplicationRecord
   before_validation :guarantee_source
 
   def name
-    "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}".strip.presence || "Unknown contact"
   end
 
   private

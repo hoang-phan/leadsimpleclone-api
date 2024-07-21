@@ -7,6 +7,8 @@ module Queries
 
       let!(:contact_1) { create(:contact) }
       let!(:contact_2) { create(:contact) }
+      let!(:stage) { create(:stage) }
+      let!(:lead) { create(:lead, contacts: [contact_1]) }
 
       let(:json_response) { JSON(response.body).dig("data", "contacts") }
       let(:expected_response) do
@@ -16,6 +18,8 @@ module Queries
             "firstName" => contact_1.first_name,
             "lastName" => contact_1.last_name,
             "companyName" => contact_1.company_name,
+            "name" => contact_1.name,
+            "leadsCount" => 1,
             "source" => {
               "id" => contact_1.source.id.to_s,
               "name" => contact_1.source.name
@@ -31,9 +35,11 @@ module Queries
               edges {
                 node {
                   id
+                  name
                   firstName
                   lastName
                   companyName
+                  leadsCount
                   source {
                     id
                     name
