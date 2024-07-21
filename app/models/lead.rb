@@ -5,6 +5,8 @@ class Lead < ApplicationRecord
   has_many :lead_contacts, dependent: :destroy
   has_many :contacts, through: :lead_contacts
 
+  accepts_nested_attributes_for :lead_stage
+
   validates :name, presence: true
 
   before_validation :ensure_lead_stage
