@@ -7,4 +7,8 @@ RSpec.describe Lead, type: :model do
     it { is_expected.to have_many(:lead_contacts).dependent(:destroy) }
     it { is_expected.to have_many(:contacts).through(:lead_contacts) }
   end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+  end
 end

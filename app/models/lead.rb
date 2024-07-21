@@ -5,7 +5,14 @@ class Lead < ApplicationRecord
   has_many :lead_contacts, dependent: :destroy
   has_many :contacts, through: :lead_contacts
 
+  validates :name, presence: true
+
   before_validation :ensure_lead_stage
+
+  def stage_id=(value)
+    ensure_lead_stage
+    lead_stage.stage_id = value
+  end
 
   private
 
