@@ -8,5 +8,6 @@ module Types
     field :save_lead, mutation: Mutations::SaveLead
     field :delete_leads, mutation: Mutations::DeleteLeads
     field :create_leads_from_contacts, mutation: Mutations::CreateLeadsFromContacts
+    field :merge_contacts, mutation: Mutations::MergeContacts
   end
 end

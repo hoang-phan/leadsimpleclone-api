@@ -5,6 +5,7 @@ module Mutations
     describe ".resolve" do
       include_context "api user authenticated"
 
+      let!(:stage) { create(:stage) }
       let!(:existing_leads) { create_list(:lead, 2) }
       let(:json_response) { JSON(response.body).dig("data", "deleteLeads") }
       let(:query) do
