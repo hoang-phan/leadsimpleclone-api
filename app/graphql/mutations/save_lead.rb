@@ -3,12 +3,12 @@
 module Mutations
   class SaveLead < BaseMutation
     argument :id, ID, required: false
-    argument :name, String, required: true
+    argument :name, String, required: false
     argument :emails_sent, Integer, required: false
     argument :calls_made, Integer, required: false
-    argument :assignee, Types::UserInputType, required: false
-    argument :stage, Types::StageInputType, required: false
-    argument :contacts, [Types::ContactInputType], required: false
+    argument :assignee_id, ID, required: false
+    argument :stage_id, ID, required: false
+    argument :contact_ids, [ID], required: false
 
     type Types::LeadType
 

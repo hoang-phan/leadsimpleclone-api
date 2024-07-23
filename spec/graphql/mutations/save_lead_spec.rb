@@ -9,21 +9,21 @@ module Mutations
         <<~GRAPHQL
           mutation saveLead(
             $id: ID,
-            $name: String!,
+            $name: String,
             $emailsSent: Int,
             $callsMade: Int,
-            $assignee: UserInput!,
-            $contacts: [ContactInput!],
-            $stage: StageInput!
+            $assigneeId: ID,
+            $contactIds: [ID!],
+            $stageId: ID
           ) {
             saveLead(input: {
               id: $id,
               name: $name,
               emailsSent: $emailsSent,
               callsMade: $callsMade,
-              assignee: $assignee,
-              contacts: $contacts,
-              stage: $stage
+              assigneeId: $assigneeId,
+              contactIds: $contactIds,
+              stageId: $stageId
             }) {
               id
               name
@@ -52,9 +52,9 @@ module Mutations
           name: name,
           emailsSent: emails_sent,
           callsMade: calls_made,
-          assignee: assignee_attributes,
-          contacts: contacts_attributes,
-          stage: stage_attributes
+          assigneeId: user.id,
+          contactIds: [contact.id],
+          stageId: stage.id
         }
       end
       let!(:contact) { create(:contact) }
@@ -62,9 +62,6 @@ module Mutations
       let(:emails_sent) { 5 }
       let(:calls_made) { 7 }
       let(:name) { Faker::Name.name }
-      let(:assignee_attributes) { { id: user.id } }
-      let(:contacts_attributes) { [{ id: contact.id }] }
-      let(:stage_attributes) { { id: stage.id } }
       let(:json_response) { JSON(response.body).dig("data", "saveLead") }
       let(:expected_response) do
         {
